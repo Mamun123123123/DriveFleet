@@ -60,22 +60,7 @@ const ExploreCars = () => {
                 {car.carName}
               </h2>
 
-              <p className="text-gray-600">
-                🚗 Type: {car.carType}
-              </p>
-
-              <p className="text-gray-600">
-                💰 ${car.dailyRentPrice} / day
-              </p>
-
-              <p className="text-gray-600">
-                👥 Seats: {car.seatCapacity}
-              </p>
-
-              <p className="text-gray-600">
-                📍 {car.pickupLocation}
-              </p>
-
+             
              
               <p
                 className={`font-semibold ${
@@ -89,7 +74,7 @@ const ExploreCars = () => {
 
               
               <button
-                onClick={() => router.push(`/cars/${car._id}`)}
+                onClick={() => router.push(`/explore-cars/${car._id}`)}
                 className="w-full mt-3 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
               >
                 Details
