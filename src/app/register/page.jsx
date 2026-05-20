@@ -47,6 +47,7 @@ export default function SignUpPage() {
       await authClient.signOut();
 
       toast.success("Registration Successful");
+      alert("Registration Successfull")
 
       router.push("/login");
     }
@@ -64,7 +65,7 @@ export default function SignUpPage() {
 
       <Card className="w-full max-w-md border border-white/30 bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-6 sm:p-8">
 
-        {/* HEADER */}
+       
         <div className="text-center mb-8">
 
           <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-4 shadow-md">
@@ -81,13 +82,12 @@ export default function SignUpPage() {
 
         </div>
 
-        {/* FORM */}
         <Form
           className="flex w-full flex-col gap-5"
           onSubmit={handleSubmit(onSubmit)}
         >
 
-          {/* NAME */}
+      
           <TextField isRequired>
             <Label className="mb-1 font-medium text-gray-700">
               Full Name
@@ -107,7 +107,7 @@ export default function SignUpPage() {
             </FieldError>
           </TextField>
 
-          {/* IMAGE */}
+         
           <TextField isRequired>
             <Label className="mb-1 font-medium text-gray-700">
               Photo URL
@@ -127,7 +127,7 @@ export default function SignUpPage() {
             </FieldError>
           </TextField>
 
-          {/* EMAIL */}
+          
           <TextField isRequired>
             <Label className="mb-1 font-medium text-gray-700">
               Email Address
@@ -153,7 +153,7 @@ export default function SignUpPage() {
             </FieldError>
           </TextField>
 
-          {/* PASSWORD */}
+         
           <TextField isRequired>
             <Label className="mb-1 font-medium text-gray-700">
               Password
@@ -192,7 +192,7 @@ export default function SignUpPage() {
             </FieldError>
           </TextField>
 
-          {/* REGISTER BUTTON */}
+          
           <Button
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-6 text-base font-semibold transition-all duration-300 shadow-lg hover:scale-[1.02]"
@@ -203,14 +203,14 @@ export default function SignUpPage() {
 
         </Form>
 
-        {/* DIVIDER */}
+        
         <div className="flex items-center gap-3 my-6">
           <div className="h-px flex-1 bg-gray-300" />
           <span className="text-sm text-gray-500">OR</span>
           <div className="h-px flex-1 bg-gray-300" />
         </div>
 
-        {/* GOOGLE BUTTON */}
+       
         <Button
           onClick={handleGoogleLogin}
           variant="bordered"
@@ -220,7 +220,7 @@ export default function SignUpPage() {
           Continue with Google
         </Button>
 
-        {/* LOGIN LINK */}
+        
         <p className="text-center text-sm text-gray-500 mt-6">
           Already have an account?{" "}
           <Link
