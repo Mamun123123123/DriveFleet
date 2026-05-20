@@ -15,7 +15,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { GrGoogle } from "react-icons/gr";
 
 export default function LoginPage() {
@@ -37,13 +37,15 @@ export default function LoginPage() {
     });
 
     if (error) {
-      toast.error(error.message);
+    //   toast.error(error.message);
+    toast(error.message)
       return;
     }
 
     if (res) {
-      toast.success("Login Successful");
-
+    //   toast.success("Login Successful");
+    toast("Login Successful ")
+      
       setTimeout(() => {
         router.push("/");
       }, 400);

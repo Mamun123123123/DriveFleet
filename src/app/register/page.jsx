@@ -15,8 +15,8 @@ import {
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { toast } from "react-toastify";
 import { GrGoogle } from "react-icons/gr";
+import toast from "react-hot-toast";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -39,14 +39,15 @@ export default function SignUpPage() {
     });
 
     if (error) {
-      toast.error(error.message);
+        toast(error.message)
+    //   toast.error(error.message);
       return;
     }
 
     if (res) {
       await authClient.signOut();
-
-      toast.success("Registration Successful");
+      toast("Registration Successfull")
+    //   toast.success("Registration Successful");
       alert("Registration Successfull")
 
       router.push("/login");

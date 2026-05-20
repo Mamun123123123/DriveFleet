@@ -2,6 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const CarDetailsClient = ({ car }) => {
   const [open, setOpen] = useState(false);
@@ -52,6 +53,7 @@ const CarDetailsClient = ({ car }) => {
     if (!res.ok) throw new Error("Booking failed");
 
     alert("Booking successful 🚗");
+    toast("Booking successful")
 
     setForm({
       driverNeeded: "no",
