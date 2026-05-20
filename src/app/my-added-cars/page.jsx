@@ -81,7 +81,7 @@ const MyCarsPage = () => {
               </button>
 
               <button
-                className="bg-red-600 text-white px-3 py-1 rounded"
+                className="bg-red-600 text-black border px-3 py-1 rounded"
                 onClick={() => handleDelete(car._id)}
               >
                 Delete
