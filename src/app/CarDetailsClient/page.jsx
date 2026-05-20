@@ -23,10 +23,10 @@ const CarDetailsClient = ({ car }) => {
 
           <h1 className="text-3xl font-bold">{car.carName}</h1>
 
-          <p>🚗 Type: <b>{car.carType}</b></p>
-          <p>💰 Price: <b>${car.dailyRentPrice}/day</b></p>
-          <p>👥 Seats: <b>{car.seatCapacity}</b></p>
-          <p>📍 Location: <b>{car.pickupLocation}</b></p>
+          <p>Type: <b>{car.carType}</b></p>
+          <p>Price: <b>${car.dailyRentPrice}/day</b></p>
+          <p> Seats: <b>{car.seatCapacity}</b></p>
+          <p> Location: <b>{car.pickupLocation}</b></p>
 
           <p
             className={`font-semibold ${
