@@ -89,7 +89,7 @@ const AvailableCars = () => {
               Status: {car.availabilityStatus}
             </p>
 
-            <Link href={`/cars/${car._id}`}>
+            <Link href={`/explore-cars/${car._id}`}>
               <button className="mt-3 w-full bg-blue-600 text-white py-2 rounded">
                 View Details
               </button>
