@@ -2,8 +2,15 @@
 
 import React, { useState } from "react";
 
+
+import { authClient } from "@/lib/auth-client";
+
 const AddCar = () => {
+
   const [loading, setLoading] = useState(false);
+
+  
+  const { data: session } = authClient.useSession();
 
   const [form, setForm] = useState({
     carName: "",
@@ -24,25 +31,44 @@ const AddCar = () => {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
+
+  
+    if (!session?.user) {
+      alert("Please login first");
+      return;
+    }
+
     setLoading(true);
 
     try {
+
+    
+      const carData = {
+        ...form,
+        userEmail: session.user.email,
+        userName: session.user.name,
+      };
+
       const res = await fetch("http://localhost:5000/car", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+
+       
+        body: JSON.stringify(carData),
       });
 
       const data = await res.json();
+
       console.log("Response:", data);
 
       if (res.ok) {
+
         alert("Car added successfully!");
 
-        // reset form
         setForm({
           carName: "",
           dailyRentPrice: "",
@@ -53,14 +79,23 @@ const AddCar = () => {
           description: "",
           availabilityStatus: "Available",
         });
+
       } else {
+
         alert("Failed to add car");
+
       }
+
     } catch (error) {
+
       console.error("Error:", error);
+
       alert("Something went wrong!");
+
     } finally {
+
       setLoading(false);
+
     }
   };
 
@@ -72,7 +107,6 @@ const AddCar = () => {
 
       <form onSubmit={handleSubmit} className="space-y-4">
 
-        {/* Car Name */}
         <input
           type="text"
           name="carName"
@@ -83,7 +117,6 @@ const AddCar = () => {
           required
         />
 
-        {/* Daily Rent Price */}
         <input
           type="number"
           name="dailyRentPrice"
@@ -94,7 +127,6 @@ const AddCar = () => {
           required
         />
 
-        {/* Car Type */}
         <select
           name="carType"
           value={form.carType}
@@ -110,18 +142,16 @@ const AddCar = () => {
           <option value="Sports">Sports</option>
         </select>
 
-        {/* Image URL */}
         <input
           type="text"
           name="imageUrl"
-          placeholder="Image URL (imgbb / postimage)"
+          placeholder="Image URL"
           value={form.imageUrl}
           onChange={handleChange}
           className="w-full p-3 border rounded"
           required
         />
 
-        {/* Seat Capacity */}
         <input
           type="number"
           name="seatCapacity"
@@ -132,7 +162,6 @@ const AddCar = () => {
           required
         />
 
-        {/* Pickup Location */}
         <input
           type="text"
           name="pickupLocation"
@@ -143,7 +172,6 @@ const AddCar = () => {
           required
         />
 
-        {/* Description */}
         <textarea
           name="description"
           placeholder="Car Description"
@@ -153,7 +181,6 @@ const AddCar = () => {
           rows="4"
         />
 
-        {/* Availability Status */}
         <select
           name="availabilityStatus"
           value={form.availabilityStatus}
@@ -164,11 +191,10 @@ const AddCar = () => {
           <option value="Unavailable">Unavailable</option>
         </select>
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition disabled:opacity-50"
+          className="w-full bg-blue-600 text-white py-3 rounded"
         >
           {loading ? "Adding Car..." : "Add Car"}
         </button>
