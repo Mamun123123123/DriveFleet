@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
 const MyCarsPage = () => {
 
@@ -23,7 +24,7 @@ const MyCarsPage = () => {
       try {
 
         const res = await fetch(
-          `http://localhost:5000/my-added-cars/${session.user.email}`
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/my-added-cars/${session.user.email}`
         );
 
         const data = await res.json();
@@ -52,7 +53,7 @@ const MyCarsPage = () => {
 
   const handleConfirmDelete = async () => {
 
-    const res = await fetch(`http://localhost:5000/car/${deleteId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/car/${deleteId}`, {
       method: "DELETE"
     });
 
@@ -89,17 +90,22 @@ const MyCarsPage = () => {
         {cars.map((car) => (
           <div key={car._id} className="border rounded p-4 shadow">
 
-            <img
-              src={car.imageUrl}
-              className="w-full h-40 object-cover rounded"
-            />
+            {car?.imageUrl && (
+  <Image
+    src={car.imageUrl}
+    alt={car?.carName || "Car image"}
+    width={500}
+    height={300}
+    className="w-full h-48 object-cover"
+  />
+)}
 
             <h2 className="text-xl font-semibold mt-2">
-              {car.carName}
+              {car?.carName}
             </h2>
 
             <p>Price: ${car.dailyRentPrice}</p>
-            <p>Type: {car.carType}</p>
+            <p>Type: {car?.carType}</p>
             <p>Location: {car.pickupLocation}</p>
 
             <div className="flex gap-4 mt-3">
@@ -130,7 +136,7 @@ const MyCarsPage = () => {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
 
-          <div className="bg-white p-6 rounded w-[300px]">
+          <div className="bg-white p-6 rounded">
 
             <h2 className="text-lg font-bold mb-4">
               Are you sure?

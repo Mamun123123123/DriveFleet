@@ -29,7 +29,7 @@ const MyBookingsPage = async () => {
 
   try {
     const res = await fetch(
-      `http://localhost:5000/bookings/${user.id}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${user.id}`,
       {
         cache: "no-store",
       }
@@ -73,7 +73,7 @@ const MyBookingsPage = async () => {
           >
        
             <h2 className="text-xl font-bold text-gray-800">
-              {booking.carName}
+              {booking?.carName}
             </h2>
 
            

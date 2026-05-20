@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const ExploreCars = () => {
   const [cars, setCars] = useState([]);
@@ -22,7 +23,7 @@ const ExploreCars = () => {
       if (type) params.append("type", type);
 
       const res = await fetch(
-        `http://localhost:5000/explore-cars?${params.toString()}`
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/explore-cars?${params.toString()}`
       );
 
       const data = await res.json();
@@ -35,10 +36,14 @@ const ExploreCars = () => {
     }
   };
 
-  // 🔥 auto fetch on change
+  
   useEffect(() => {
-    fetchCars(search, type);
-  }, [search, type]);
+  const loadCars = async () => {
+    await fetchCars(search, type);
+  };
+
+  loadCars();
+}, [search, type]);
 
   if (loading) {
     return (
@@ -102,16 +107,20 @@ const ExploreCars = () => {
               key={car._id}
               className="bg-white shadow-lg rounded-xl overflow-hidden"
             >
-              <img
-                src={car.imageUrl}
-                alt={car.carName}
-                className="w-full h-48 object-cover"
-              />
+              {car?.imageUrl && (
+  <Image
+    src={car.imageUrl}
+    alt={car?.carName || "Car image"}
+    width={500}
+    height={300}
+    className="w-full h-48 object-cover"
+  />
+)}
 
               <div className="p-4 space-y-2">
 
                 <h2 className="text-xl font-bold">
-                  {car.carName}
+                  {car?.carName}
                 </h2>
 
                 <p className="text-sm text-gray-500">

@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -42,7 +43,7 @@ const CarDetailsClient = ({ car }) => {
       bookingDate: new Date().toISOString(),
     };
 
-    const res = await fetch("http://localhost:5000/booking", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,45 +75,49 @@ const CarDetailsClient = ({ car }) => {
 
     
         <div className="bg-white shadow-xl rounded-2xl overflow-hidden">
-          <img
-            src={car.imageUrl}
-            alt={car.carName}
-            className="w-full h-[300px] sm:h-[420px] object-cover"
-          />
+          {car?.imageUrl && (
+  <Image
+    src={car.imageUrl}
+    alt={car?.carName || "Car image"}
+    width={500}
+    height={300}
+    className="w-full h-48 object-cover"
+  />
+)}
         </div>
 
    
         <div className="space-y-4 bg-white p-5 sm:p-6 rounded-2xl shadow-xl">
 
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-            {car.carName}
+            {car?.carName}
           </h1>
 
           <div className="space-y-1 text-gray-700">
-            <p>🚘 Type: <b>{car.carType}</b></p>
-            <p>💰 Price: <b>${car.dailyRentPrice}/day</b></p>
-            <p>💺 Seats: <b>{car.seatCapacity}</b></p>
-            <p>📍 Location: <b>{car.pickupLocation}</b></p>
+            <p>🚘 Type: <b>{car?.carType}</b></p>
+            <p>💰 Price: <b>${car?.dailyRentPrice}/day</b></p>
+            <p>💺 Seats: <b>{car?.seatCapacity}</b></p>
+            <p>📍 Location: <b>{car?.pickupLocation}</b></p>
           </div>
 
         
           <p
             className={`font-semibold ${
-              car.availabilityStatus === "Available"
+              car?.availabilityStatus === "Available"
                 ? "text-green-600"
                 : "text-red-600"
             }`}
           >
-            {car.availabilityStatus}
+            {car?.availabilityStatus}
           </p>
 
           <p className="text-gray-600 text-sm">
-            {car.description}
+            {car?.description}
           </p>
 
           
           <button
-            disabled={car.availabilityStatus !== "Available"}
+            disabled={car?.availabilityStatus !== "Available"}
             onClick={() => setOpen(true)}
             className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
           >
@@ -133,9 +138,9 @@ const CarDetailsClient = ({ car }) => {
             </h2>
 
             <div className="space-y-1 text-sm text-gray-700">
-              <p><b>Car:</b> {car.carName}</p>
-              <p><b>Price:</b> ${car.dailyRentPrice}/day</p>
-              <p><b>Pickup:</b> {car.pickupLocation}</p>
+              <p><b>Car:</b> {car?.carName}</p>
+              <p><b>Price:</b> ${car?.dailyRentPrice}/day</p>
+              <p><b>Pickup:</b> {car?.pickupLocation}</p>
             </div>
 
            

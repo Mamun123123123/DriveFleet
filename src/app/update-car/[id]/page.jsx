@@ -25,13 +25,13 @@ const UpdateCar = ({ params }) => {
 
       try {
 
-        const res = await fetch(`http://localhost:5000/cars/${id}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`);
         const data = await res.json();
 
         setForm({
-          carName: data.carName || "",
+          carName: data?.carName || "",
           dailyRentPrice: data.dailyRentPrice || "",
-          carType: data.carType || "",
+          carType: data?.carType || "",
           imageUrl: data.imageUrl || "",
           seatCapacity: data.seatCapacity || "",
           pickupLocation: data.pickupLocation || "",
@@ -59,7 +59,7 @@ const UpdateCar = ({ params }) => {
 
     e.preventDefault();
 
-    const res = await fetch(`http://localhost:5000/car/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/car/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

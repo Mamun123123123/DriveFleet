@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const AvailableCars = () => {
 
@@ -14,7 +15,7 @@ const AvailableCars = () => {
 
       try {
 
-        const res = await fetch("http://localhost:5000/explore-cars");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/explore-cars`);
         const data = await res.json();
 
         setCars(data || []);
@@ -64,29 +65,34 @@ const AvailableCars = () => {
             className="border rounded-xl shadow p-4"
           >
 
-            <img
-              src={car.imageUrl}
-              className="w-full h-40 object-cover rounded"
-            />
+           {car?.imageUrl && (
+  <Image
+    src={car.imageUrl}
+    alt={car?.carName || "Car image"}
+    width={500}
+    height={300}
+    className="w-full h-48 object-cover"
+  />
+)}
 
             <h3 className="text-lg font-semibold mt-2">
-              {car.carName}
+              {car?.carName}
             </h3>
 
             <p className="text-sm text-gray-600">
-              Type: {car.carType}
+              Type: {car?.carType}
             </p>
 
             <p className="text-sm text-gray-600">
-              Price: ${car.dailyRentPrice}/day
+              Price: ${car?.dailyRentPrice}/day
             </p>
 
             <p className="text-sm text-gray-600">
-              Location: {car.pickupLocation}
+              Location: {car?.pickupLocation}
             </p>
 
             <p className="text-sm text-gray-600">
-              Status: {car.availabilityStatus}
+              Status: {car?.availabilityStatus}
             </p>
 
             <Link href={`/explore-cars/${car._id}`}>
