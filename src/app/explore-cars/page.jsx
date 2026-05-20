@@ -127,6 +127,7 @@ const ExploreCars = () => {
                 >
                   {car.availabilityStatus}
                 </p>
+                <p>Bookings: {car.booking_count || 0}</p>
 
                 <button
                   onClick={() => router.push(`/explore-cars/${car._id}`)}
