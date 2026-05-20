@@ -12,13 +12,13 @@ import {
   Label,
   TextField,
 } from "@heroui/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 import { toast } from "react-toastify";
 import { GrGoogle } from "react-icons/gr";
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const router = useRouter();
 
   const {
@@ -28,11 +28,13 @@ export default function LoginPage() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const { email, password } = data;
+    const { name, email, password, image } = data;
 
-    const { data: res, error } = await authClient.signIn.email({
+    const { data: res, error } = await authClient.signUp.email({
+      name,
       email,
       password,
+      image,
       callbackURL: "/",
     });
 
@@ -42,11 +44,11 @@ export default function LoginPage() {
     }
 
     if (res) {
-      toast.success("Login Successful");
+      await authClient.signOut();
 
-      setTimeout(() => {
-        router.push("/");
-      }, 400);
+      toast.success("Registration Successful");
+
+      router.push("/login");
     }
   };
 
@@ -60,29 +62,72 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-sky-100 flex items-center justify-center px-4 py-10">
 
-      <Card className="w-full max-w-md border border-white/40 bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-6 sm:p-8">
+      <Card className="w-full max-w-md border border-white/30 bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-6 sm:p-8">
 
-      
+        {/* HEADER */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto rounded-full bg-indigo-100 flex items-center justify-center mb-4 shadow-md">
+
+          <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-4 shadow-md">
             <Check className="text-indigo-600" />
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-            Welcome Back
+            Create Account
           </h1>
 
           <p className="text-sm text-gray-500 mt-2">
-            Login to continue your journey
+            Join us and start your journey today
           </p>
+
         </div>
 
+        {/* FORM */}
         <Form
           className="flex w-full flex-col gap-5"
           onSubmit={handleSubmit(onSubmit)}
         >
 
-         
+          {/* NAME */}
+          <TextField isRequired>
+            <Label className="mb-1 font-medium text-gray-700">
+              Full Name
+            </Label>
+
+            <Input
+              placeholder="Enter your full name"
+              radius="lg"
+              size="lg"
+              {...register("name", {
+                required: "Name is required",
+              })}
+            />
+
+            <FieldError className="text-red-500 text-sm">
+              {errors.name?.message}
+            </FieldError>
+          </TextField>
+
+          {/* IMAGE */}
+          <TextField isRequired>
+            <Label className="mb-1 font-medium text-gray-700">
+              Photo URL
+            </Label>
+
+            <Input
+              placeholder="https://example.com/photo.jpg"
+              radius="lg"
+              size="lg"
+              {...register("image", {
+                required: "Image URL is required",
+              })}
+            />
+
+            <FieldError className="text-red-500 text-sm">
+              {errors.image?.message}
+            </FieldError>
+          </TextField>
+
+          {/* EMAIL */}
           <TextField isRequired>
             <Label className="mb-1 font-medium text-gray-700">
               Email Address
@@ -93,9 +138,13 @@ export default function LoginPage() {
               placeholder="Enter your email"
               radius="lg"
               size="lg"
-              className="w-full"
               {...register("email", {
                 required: "Email is required",
+                pattern: {
+                  value:
+                    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
               })}
             />
 
@@ -104,6 +153,7 @@ export default function LoginPage() {
             </FieldError>
           </TextField>
 
+          {/* PASSWORD */}
           <TextField isRequired>
             <Label className="mb-1 font-medium text-gray-700">
               Password
@@ -114,14 +164,27 @@ export default function LoginPage() {
               placeholder="Enter your password"
               radius="lg"
               size="lg"
-              className="w-full"
               {...register("password", {
                 required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "At least 8 characters required",
+                },
+                validate: {
+                  hasUppercase: (value) =>
+                    /[A-Z]/.test(value) ||
+                    "Must contain 1 uppercase letter",
+
+                  hasNumber: (value) =>
+                    /[0-9]/.test(value) ||
+                    "Must contain 1 number",
+                },
               })}
             />
 
             <Description className="text-xs text-gray-500 mt-1">
-              Enter your secure password
+              Password must contain at least 8 characters,
+              1 uppercase letter and 1 number
             </Description>
 
             <FieldError className="text-red-500 text-sm">
@@ -129,43 +192,44 @@ export default function LoginPage() {
             </FieldError>
           </TextField>
 
-          
+          {/* REGISTER BUTTON */}
           <Button
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-6 text-base font-semibold transition-all duration-300 shadow-lg hover:scale-[1.02]"
           >
             <Check />
-            Login
+            Register
           </Button>
 
-       
-          <p className="text-sm text-gray-500 text-center">
-            Don't have an account?{" "}
-            <Link
-              href="/register"
-              className="text-indigo-600 font-semibold hover:underline hover:text-red-500"
-            >
-              Register
-            </Link>
-          </p>
         </Form>
 
-      
+        {/* DIVIDER */}
         <div className="flex items-center gap-3 my-6">
           <div className="h-px flex-1 bg-gray-300" />
           <span className="text-sm text-gray-500">OR</span>
           <div className="h-px flex-1 bg-gray-300" />
         </div>
 
-     
+        {/* GOOGLE BUTTON */}
         <Button
           onClick={handleGoogleLogin}
           variant="bordered"
-          className="w-full rounded-xl py-6 border-2 hover:bg-indigo-600 hover:text-blue-500 transition-all duration-300 text-base font-medium flex items-center justify-center gap-3"
+          className="w-full rounded-xl py-6 border-2 hover:bg-indigo-600 hover:text-white transition-all duration-300 text-base font-medium flex items-center justify-center gap-3"
         >
           <GrGoogle className="text-lg" />
           Continue with Google
         </Button>
+
+        {/* LOGIN LINK */}
+        <p className="text-center text-sm text-gray-500 mt-6">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="text-indigo-600 font-semibold hover:underline"
+          >
+            Login
+          </Link>
+        </p>
 
       </Card>
     </div>
