@@ -10,7 +10,7 @@ const CarDetailsClient = ({ car }) => {
 
   const {data:session} = authClient.useSession()
   const user = session?.user
-  console.log(user);
+  // console.log(user);
   
 
   const [form, setForm] = useState({
