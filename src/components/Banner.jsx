@@ -20,7 +20,7 @@ export default function Banner() {
      
         <div className="mt-8">
           <Link
-            href="/explore"
+            href="/explore-cars"
             className="bg-blue-600 hover:bg-blue-700 transition px-6 py-3 rounded-lg text-white font-medium"
           >
             Explore Cars
