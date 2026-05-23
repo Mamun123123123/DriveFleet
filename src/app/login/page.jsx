@@ -60,7 +60,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-sky-100 flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen  from-indigo-100 via-white to-sky-100 flex items-center justify-center px-4 py-10">
 
       <Card className="w-full max-w-md border border-white/40 bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-6 sm:p-8">
 
@@ -142,7 +142,7 @@ export default function LoginPage() {
 
        
           <p className="text-sm text-gray-500 text-center">
-            Don't have an account?{" "}
+            Do not have an account?{" "}
             <Link
               href="/register"
               className="text-indigo-600 font-semibold hover:underline hover:text-red-500"

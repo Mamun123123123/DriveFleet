@@ -62,7 +62,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-sky-100 flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen  from-indigo-100 via-white to-sky-100 flex items-center justify-center px-4 py-10">
 
       <Card className="w-full max-w-md border border-white/30 bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-6 sm:p-8">
 
