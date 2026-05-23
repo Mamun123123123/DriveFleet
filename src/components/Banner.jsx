@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Banner() {
   return (
-    <section className=" from-gray-900 to-gray-800 text-white">
+    <section className="bg-gray-900 from-gray-900 to-gray-800 text-white">
       <div className="max-w-7xl mx-auto px-6 py-24 flex flex-col items-center text-center">
 
         <h1 className="text-4xl md:text-6xl font-bold leading-tight">
